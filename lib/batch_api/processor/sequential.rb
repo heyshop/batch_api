@@ -26,4 +26,3 @@ module BatchApi
     end
   end
 end
-

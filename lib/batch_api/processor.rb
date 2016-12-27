@@ -3,6 +3,8 @@ require 'batch_api/operation'
 
 module BatchApi
   class Processor
+    REQUEST_KEY = :batch
+
     attr_reader :ops, :options, :app
 
     # Public: create a new Processor.
@@ -57,9 +59,7 @@ module BatchApi
     #
     # Returns a hash ready to go to the user
     def format_response(operation_results)
-      {
-        "results" => operation_results
-      }
+      operation_results
     end
 
     # Internal: Validate that an allowable number of operations have been
@@ -73,7 +73,8 @@ module BatchApi
     #
     # Returns an array of BatchApi::Operation objects
     def process_ops
-      ops = @request.params.delete("ops")
+      raise Errors::BadOptionError, "Must pass '#{REQUEST_KEY}' as key" unless @request.params[REQUEST_KEY.to_s]
+      ops = @request.params.delete(REQUEST_KEY.to_s)
       if !ops || ops.empty?
         raise Errors::NoOperationsError, "No operations provided"
       elsif ops.length > BatchApi.config.limit
@@ -104,9 +105,9 @@ module BatchApi
     #
     # Returns the valid options hash.
     def process_options
-      unless @request.params["sequential"]
-        raise Errors::BadOptionError, "Sequential flag is currently required"
-      end
+      # unless @request.params["sequential"]
+      #   raise Errors::BadOptionError, "Sequential flag is currently required"
+      # end
       @request.params
     end
   end
