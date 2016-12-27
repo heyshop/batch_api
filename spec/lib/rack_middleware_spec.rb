@@ -62,7 +62,7 @@ describe BatchApi::RackMiddleware do
       context "for a successful set of calls" do
         it "returns the JSON-encoded result as the body" do
           output = middleware.call(env)
-          expect(output[2]).to eq([MultiJson.dump(result)])
+          expect(output[2]).to eq([result.to_json])
         end
 
         it "returns a 200" do

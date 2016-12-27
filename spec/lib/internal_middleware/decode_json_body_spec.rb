@@ -9,7 +9,7 @@ describe BatchApi::InternalMiddleware::DecodeJsonBody do
     BatchApi::Response.new([
       200,
       {"Content-Type" => "application/json"},
-      [MultiJson.dump(json)]
+      json.to_json
     ])
   }
 
@@ -30,7 +30,7 @@ describe BatchApi::InternalMiddleware::DecodeJsonBody do
     context "for non-JSON responses" do
       it "doesn't decode" do
         result.headers = {"Content-Type" => "text/html"}
-        expect(decoder.call(env).body).to eq(MultiJson.dump(json))
+        expect(decoder.call(env).body).to eq(json.to_json)
       end
     end
 
