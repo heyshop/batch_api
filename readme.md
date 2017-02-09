@@ -17,7 +17,7 @@ Making a batch request:
 # Content-Type: application/json
 
 {
-  ops: [
+  batch: [
     {method: "get",    url: "/patrons"},
     {method: "post",   url: "/orders/new",  params: {dish_id: 123}},
     {method: "get",    url: "/oh/no/error", headers: {break: "fast"}},
@@ -31,7 +31,7 @@ Reading the response:
 
 ```
 {
-  results: [
+  [
     {status: 200, body: [{id: 1, name: "Jim-Bob"}, ...], headers: {}},
     {status: 201, body: {id: 4, dish_name: "Spicy Crab Legs"}, headers: {}},
     {status: 500, body: {error: {oh: "noes!"}}, headers: {Problem: "woops"}},
