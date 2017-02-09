@@ -31,7 +31,7 @@ module BatchApi
       # so turn it into a string
       base_body = ""
       body_pieces.each {|str| base_body << str}
-      base_body
+      JSON.parse(base_body) rescue base_body
     end
   end
 end

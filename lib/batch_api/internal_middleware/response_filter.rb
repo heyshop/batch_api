@@ -15,7 +15,7 @@ module BatchApi
       # remove any output for a successful response.
       def call(env)
         @app.call(env).tap do |result|
-          if env[:op].options["silent"] && (200...299).include?(result.status)
+          if env[:batch].options["silent"] && (200...299).include?(result.status)
             # we have success and a request for silence
             # so remove all the content before proceeding
             result.status = result.body = result.headers = nil
