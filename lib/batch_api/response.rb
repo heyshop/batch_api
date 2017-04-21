@@ -17,7 +17,7 @@ module BatchApi
     def as_json(options = {})
       {}.tap do |result|
         result[:body] = @body unless @body.nil?
-        result[:headers] = @headers unless @headers.nil?
+        # result[:headers] = @headers unless @headers.nil?
         result[:status] = @status unless @status.nil?
       end
     end
